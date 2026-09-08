@@ -1,0 +1,737 @@
+Buatkan aplikasi web **Langgas Sinau Akademi** menggunakan:
+
+* Laravel
+* PHP 8.3+
+* MySQL
+* Blade Template
+* Tailwind CSS
+* Alpine.js
+
+Jangan gunakan React, Vue, Bootstrap, Livewire, Filament, atau framework frontend lainnya.
+
+## IDENTITAS
+
+Nama aplikasi:
+
+**LANGGAS SINAU AKADEMI**
+
+Tagline:
+
+**“Berdikari Mengenal Diri”**
+
+Aplikasi ini merupakan sistem akademik dan absensi untuk LKP Langgas Sinau.
+
+Sistem hanya memiliki 2 role:
+
+* Admin
+* Siswa
+
+Tidak ada role instruktur.
+
+---
+
+## 1. LOGIN
+
+Buat satu halaman login untuk Admin dan Siswa.
+
+Desain login:
+
+* Modern
+* Minimalis
+* Profesional
+* Responsive
+* Menggunakan Tailwind CSS
+* Logo Langgas Sinau
+* Nama aplikasi
+* Tagline
+
+Form:
+
+* Email
+* Password
+* Tombol Login
+
+Setelah berhasil login:
+
+Admin diarahkan ke:
+
+`/admin/dashboard`
+
+Siswa diarahkan ke:
+
+`/siswa/dashboard`
+
+Gunakan middleware untuk membatasi akses berdasarkan role.
+
+---
+
+# 2. DASHBOARD ADMIN
+
+Buat dashboard admin dengan layout:
+
+* Sidebar
+* Navbar
+* Konten utama
+* Profile dropdown
+* Logout
+
+Gunakan Alpine.js untuk:
+
+* Sidebar mobile
+* Dropdown profile
+* Modal
+* Notifikasi
+* Toggle
+* Interaksi UI lainnya
+
+Menu Admin:
+
+### Dashboard
+
+Tampilkan:
+
+* Total siswa
+* Siswa aktif
+* Total kelas
+* Kehadiran hari ini
+* Total izin
+* Total sertifikat
+
+Tambahkan:
+
+* Grafik/visual statistik sederhana
+* Absensi terbaru
+* Siswa terbaru
+* Pengumuman terbaru
+
+### Data Siswa
+
+Admin dapat:
+
+* Melihat siswa
+* Menambah siswa
+* Mengedit siswa
+* Melihat detail siswa
+* Menghapus siswa
+* Mengubah status siswa
+
+Data siswa:
+
+* Nama lengkap
+* Nomor siswa
+* Email
+* Nomor HP
+* Alamat
+* Foto
+* Kelas
+* Program
+* Tanggal masuk
+* Status
+
+### Kelas
+
+Admin dapat:
+
+* Tambah kelas
+* Edit kelas
+* Hapus kelas
+* Melihat siswa dalam kelas
+
+Data:
+
+* Nama kelas
+* Program
+* Deskripsi
+* Status
+
+### Jadwal
+
+Admin dapat mengelola jadwal.
+
+Data:
+
+* Kelas
+* Materi
+* Tanggal
+* Jam mulai
+* Jam selesai
+* Ruangan
+* Keterangan
+
+### Absensi
+
+Ini merupakan fitur utama.
+
+Admin dapat:
+
+* Melihat seluruh absensi
+* Filter berdasarkan tanggal
+* Filter berdasarkan kelas
+* Filter berdasarkan siswa
+* Menambah absensi
+* Mengubah absensi
+* Melihat rekap absensi
+
+Status:
+
+* Hadir
+* Izin
+* Sakit
+* Alpa
+
+Tampilkan persentase kehadiran siswa.
+
+### Perizinan
+
+Admin dapat:
+
+* Melihat pengajuan izin
+* Melihat detail
+* Menyetujui
+* Menolak
+
+Data:
+
+* Siswa
+* Tanggal
+* Jenis izin
+* Alasan
+* Bukti
+* Status
+* Catatan admin
+
+### Nilai
+
+Admin dapat:
+
+* Menambahkan nilai
+* Mengedit nilai
+* Menghapus nilai
+
+Data:
+
+* Siswa
+* Kelas
+* Materi
+* Nilai
+* Keterangan
+
+### Sertifikat
+
+Admin dapat:
+
+* Menambahkan sertifikat
+* Mengedit sertifikat
+* Menghapus sertifikat
+* Melihat sertifikat siswa
+
+Data:
+
+* Siswa
+* Nama sertifikat
+* Nomor sertifikat
+* Program
+* Tanggal diterbitkan
+* File sertifikat
+
+### Pengumuman
+
+Admin dapat:
+
+* Membuat pengumuman
+* Mengedit
+* Menghapus
+
+Pengumuman dapat ditampilkan pada dashboard siswa.
+
+---
+
+# 3. DASHBOARD SISWA
+
+Siswa hanya dapat melihat data miliknya sendiri.
+
+Siswa tidak boleh melihat data siswa lain.
+
+Dashboard menampilkan:
+
+* Nama siswa
+* Foto
+* Kelas
+* Program
+* Status
+* Persentase kehadiran
+* Jumlah hadir
+* Jumlah izin
+* Jumlah sakit
+* Jumlah alpa
+* Jadwal terdekat
+* Pengumuman terbaru
+
+Menu siswa:
+
+### Dashboard
+
+Ringkasan aktivitas akademik siswa.
+
+### Profil Saya
+
+Tampilkan:
+
+* Foto
+* Nama
+* Nomor siswa
+* Email
+* Nomor HP
+* Alamat
+* Kelas
+* Program
+* Tanggal masuk
+
+Siswa dapat mengubah:
+
+* Foto
+* Nomor HP
+* Alamat
+* Password
+
+### Jadwal Saya
+
+Siswa hanya dapat melihat jadwal kelasnya.
+
+### Absensi Saya
+
+Tampilkan:
+
+* Total pertemuan
+* Hadir
+* Izin
+* Sakit
+* Alpa
+* Persentase kehadiran
+
+Tampilkan tabel:
+
+* Tanggal
+* Materi
+* Status
+* Keterangan
+
+### Pengajuan Izin
+
+Siswa dapat mengajukan izin.
+
+Form:
+
+* Tanggal
+* Jenis izin
+* Alasan
+* Bukti
+
+Status:
+
+* Menunggu
+* Disetujui
+* Ditolak
+
+### Nilai Saya
+
+Siswa hanya dapat melihat nilainya sendiri.
+
+### Sertifikat Saya
+
+Siswa dapat melihat dan mengunduh sertifikat miliknya.
+
+### Pengumuman
+
+Siswa dapat melihat pengumuman dari admin.
+
+---
+
+# 4. DATABASE
+
+Gunakan migration dan Eloquent Model.
+
+Buat tabel:
+
+### users
+
+* id
+* name
+* email
+* password
+* role
+* timestamps
+
+Role:
+
+`admin`
+
+atau
+
+`siswa`
+
+### students
+
+* id
+* user_id
+* class_id
+* student_number
+* phone
+* address
+* photo
+* program
+* entry_date
+* status
+* timestamps
+
+### classes
+
+* id
+* name
+* program
+* description
+* status
+* timestamps
+
+### schedules
+
+* id
+* class_id
+* title
+* date
+* start_time
+* end_time
+* room
+* description
+* timestamps
+
+### attendances
+
+* id
+* student_id
+* schedule_id
+* date
+* status
+* note
+* timestamps
+
+### permissions
+
+* id
+* student_id
+* date
+* type
+* reason
+* evidence
+* status
+* admin_note
+* timestamps
+
+### grades
+
+* id
+* student_id
+* class_id
+* subject
+* score
+* description
+* timestamps
+
+### certificates
+
+* id
+* student_id
+* name
+* certificate_number
+* program
+* issued_date
+* file
+* timestamps
+
+### announcements
+
+* id
+* title
+* content
+* image
+* published_at
+* status
+* timestamps
+
+Gunakan foreign key dan relationship Eloquent dengan benar.
+
+---
+
+# 5. AUTHENTICATION
+
+Gunakan authentication Laravel yang sederhana.
+
+Jika menggunakan starter kit, gunakan Laravel Breeze dengan Blade.
+
+Jangan gunakan Livewire.
+
+Implementasikan:
+
+* Login
+* Logout
+* Password hashing
+* Authentication middleware
+* Role middleware
+
+Buat middleware:
+
+`AdminMiddleware`
+
+dan:
+
+`StudentMiddleware`
+
+Pastikan siswa tidak dapat mengakses route admin meskipun mengetik URL secara manual.
+
+---
+
+# 6. TAILWIND CSS
+
+Gunakan Tailwind CSS untuk seluruh tampilan.
+
+Konsep desain:
+
+* Modern
+* Clean
+* Minimalis
+* Profesional
+* Responsive
+* Desktop dan mobile friendly
+* Card statistik
+* Tabel modern
+* Form yang rapi
+* Sidebar modern
+* Navbar modern
+* Modal menggunakan Alpine.js
+
+Jangan menggunakan Bootstrap.
+
+---
+
+# 7. ALPINE.JS
+
+Gunakan Alpine.js hanya untuk interaksi frontend.
+
+Contoh penggunaan:
+
+* Sidebar toggle
+* Mobile menu
+* Dropdown profile
+* Modal tambah/edit
+* Modal konfirmasi hapus
+* Flash notification
+* Tabs
+* Filter
+* Toggle status
+* Show/hide password
+
+Jangan menggunakan JavaScript framework lain.
+
+---
+
+# 8. STRUKTUR BLADE
+
+Gunakan struktur:
+
+resources/views/
+
+layouts/
+
+* app.blade.php
+* admin.blade.php
+* siswa.blade.php
+
+components/
+
+* sidebar.blade.php
+* navbar.blade.php
+* alert.blade.php
+* modal.blade.php
+* card.blade.php
+
+auth/
+
+* login.blade.php
+
+admin/
+
+* dashboard.blade.php
+* students/
+* classes/
+* schedules/
+* attendances/
+* permissions/
+* grades/
+* certificates/
+* announcements/
+
+siswa/
+
+* dashboard.blade.php
+* profile.blade.php
+* schedules.blade.php
+* attendances.blade.php
+* permissions.blade.php
+* grades.blade.php
+* certificates.blade.php
+* announcements.blade.php
+
+---
+
+# 9. ROUTING
+
+Gunakan route group berdasarkan role.
+
+Admin:
+
+`/admin/dashboard`
+
+`/admin/students`
+
+`/admin/classes`
+
+`/admin/schedules`
+
+`/admin/attendances`
+
+`/admin/permissions`
+
+`/admin/grades`
+
+`/admin/certificates`
+
+`/admin/announcements`
+
+Siswa:
+
+`/siswa/dashboard`
+
+`/siswa/profile`
+
+`/siswa/schedules`
+
+`/siswa/attendances`
+
+`/siswa/permissions`
+
+`/siswa/grades`
+
+`/siswa/certificates`
+
+`/siswa/announcements`
+
+---
+
+# 10. SECURITY
+
+Pastikan:
+
+* Semua form menggunakan CSRF
+* Gunakan Form Request atau validation Laravel
+* Password menggunakan hashing Laravel
+* Gunakan middleware role
+* Gunakan authorization/policy jika diperlukan
+* Siswa hanya dapat melihat data dirinya sendiri
+* Siswa tidak dapat mengakses data siswa lain melalui URL
+* Admin dapat mengakses seluruh data
+* Validasi upload file
+* Lindungi file sertifikat dan bukti izin
+
+Jangan hanya menyembunyikan menu. Semua akses harus tetap diamankan di backend.
+
+---
+
+# 11. SEEDER
+
+Buat akun demo:
+
+Admin:
+
+Email:
+`admin@langgas-sinau.com`
+
+Password:
+`password`
+
+Siswa:
+
+Email:
+`siswa@langgas-sinau.com`
+
+Password:
+`password`
+
+Tambahkan dummy data:
+
+* 10 siswa
+* Beberapa kelas
+* Jadwal
+* Absensi
+* Nilai
+* Sertifikat
+* Pengumuman
+
+---
+
+# 12. PERINTAH INSTALASI
+
+Project harus dapat dijalankan dengan:
+
+php artisan migrate --seed
+
+npm install
+
+npm run dev
+
+php artisan serve
+
+---
+
+# 13. HASIL YANG DIHARAPKAN
+
+Buat aplikasi yang benar-benar dapat digunakan.
+
+Alur utama:
+
+LOGIN
+
+↓
+
+Jika Admin
+
+↓
+
+DASHBOARD ADMIN
+
+↓
+
+Kelola Siswa, Kelas, Jadwal, Absensi, Izin, Nilai, Sertifikat, Pengumuman
+
+---
+
+LOGIN
+
+↓
+
+Jika Siswa
+
+↓
+
+DASHBOARD SISWA
+
+↓
+
+Melihat Profil, Jadwal, Absensi, Mengajukan Izin, Nilai, Sertifikat, Pengumuman
+
+Fokus aplikasi adalah:
+
+**Langgas Sinau Akademi**
+
+**Berdikari Mengenal Diri**
+
+Gunakan Laravel sebagai backend, Blade sebagai templating, Tailwind CSS sebagai styling, dan Alpine.js untuk interaksi frontend.
