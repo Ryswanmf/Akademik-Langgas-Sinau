@@ -93,6 +93,19 @@
                 <span class="rounded-md bg-emerald-500/20 text-[10px] px-1.5 py-0.5 font-bold uppercase tracking-wider {{ request()->routeIs('admin.attendances.rekap', 'admin.attendances.print-student') ? 'text-white' : 'text-emerald-700' }}">Cetak</span>
             </a>
 
+            <!-- Admin: Titik GPS & Waktu Absensi -->
+            <a href="{{ route('admin.attendance-locations.index') }}" 
+               class="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors {{ request()->routeIs('admin.attendance-locations.*') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+                <div class="flex items-center gap-3">
+                    <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    Titik GPS & Waktu
+                </div>
+                <span class="rounded-md bg-amber-500/20 text-[10px] px-1.5 py-0.5 font-bold uppercase tracking-wider {{ request()->routeIs('admin.attendance-locations.*') ? 'text-white' : 'text-amber-600' }}">GPS</span>
+            </a>
+
             <!-- Admin: Perizinan -->
             <a href="{{ route('admin.permissions.index') }}" 
                class="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors {{ request()->routeIs('admin.permissions.*') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">

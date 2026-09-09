@@ -11,6 +11,7 @@ use App\Models\Permission;
 use App\Models\Grade;
 use App\Models\Certificate;
 use App\Models\Announcement;
+use App\Models\AttendanceLocation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -481,6 +482,45 @@ class DatabaseSeeder extends Seeder
             'image' => null,
             'published_at' => Carbon::now(),
             'status' => 'published',
+        ]);
+
+        // 10. Titik Lokasi & Waktu Absensi GPS
+        AttendanceLocation::create([
+            'name' => 'LKP Langgas Sinau (Kampus Utama Banjar Rejo)',
+            'address' => 'Banjar Rejo, Kec. Batanghari, Kabupaten Lampung Timur, Lampung',
+            'plus_code' => 'V8GJ+8W Banjar Rejo, Kabupaten Lampung Timur, Lampung',
+            'latitude' => -5.124188,
+            'longitude' => 105.332312,
+            'radius_meters' => 150,
+            'strict_radius' => true,
+            'in_start' => '08:00',
+            'in_on_time_end' => '09:30',
+            'in_late_end' => '13:50',
+            'out_start' => '14:00',
+            'out_end' => '17:00',
+            'auto_alpa_time' => '17:00',
+            'working_days' => [1, 2, 3, 4, 5, 6],
+            'is_active' => true,
+            'description' => 'Titik lokasi resmi presensi LKP Langgas Sinau berdasarkan Google Plus Code V8GJ+8W Banjar Rejo.',
+        ]);
+
+        AttendanceLocation::create([
+            'name' => 'Gedung Pelatihan & Praktik Cendana',
+            'address' => 'Gg. Cendana, Banjar Rejo, Kec. Batanghari, Kabupaten Lampung Timur, Lampung 34181',
+            'plus_code' => 'V8GP+M5 Banjar Rejo, Batanghari, Lampung Timur',
+            'latitude' => -5.124000,
+            'longitude' => 105.337000,
+            'radius_meters' => 150,
+            'strict_radius' => true,
+            'in_start' => '08:00',
+            'in_on_time_end' => '09:30',
+            'in_late_end' => '13:50',
+            'out_start' => '14:00',
+            'out_end' => '17:00',
+            'auto_alpa_time' => '17:00',
+            'working_days' => [1, 2, 3, 4, 5, 6],
+            'is_active' => true,
+            'description' => 'Gedung workshop dan laboratorium komputer Gg. Cendana.',
         ]);
     }
 }

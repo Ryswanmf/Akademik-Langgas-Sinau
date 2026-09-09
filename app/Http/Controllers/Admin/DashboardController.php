@@ -60,6 +60,8 @@ class DashboardController extends Controller
             ->take(3)
             ->get();
 
+        $primaryLocation = \App\Models\AttendanceLocation::getPrimary();
+
         return view('admin.dashboard', compact(
             'totalStudents',
             'activeStudents',
@@ -70,7 +72,8 @@ class DashboardController extends Controller
             'attendanceStats',
             'recentAttendances',
             'recentStudents',
-            'recentAnnouncements'
+            'recentAnnouncements',
+            'primaryLocation'
         ));
     }
 }

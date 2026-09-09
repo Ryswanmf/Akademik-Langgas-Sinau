@@ -36,14 +36,15 @@ class AutoAlpaCommand extends Command
         $this->info("Memulai evaluasi Auto-Alpa untuk tanggal: {$targetDate->translatedFormat('d F Y')}");
 
         // Cek hari libur jika bukan dipaksa
-        $workingDays = config('attendance.working_days', [1, 2, 3, 4, 5, 6]);
+        $primaryLocation = \App\Models\AttendanceLocation::getPrimary();
+        $workingDays = $primaryLocation?->working_days ?? config('attendance.working_days', [1, 2, 3, 4, 5, 6]);
         if (!$force && !in_array($targetDate->dayOfWeek, $workingDays)) {
             $this->warn("Tanggal {$targetDateStr} adalah hari libur pelatihan (Minggu). Auto-Alpa dilewati.");
             return self::SUCCESS;
         }
 
         // Cek jam operasional jika tanggal adalah hari ini dan tidak diforce
-        $autoAlpaTime = config('attendance.auto_alpa_time', '17:00');
+        $autoAlpaTime = $primaryLocation?->auto_alpa_time ?? config('attendance.auto_alpa_time', '17:00');
         if (!$force && $targetDate->isToday() && Carbon::now()->format('H:i') < $autoAlpaTime) {
             $this->warn("Saat ini belum melewati batas jam operasional ({$autoAlpaTime} WIB). Gunakan opsi --force untuk memaksa eksekusi.");
             return self::FAILURE;

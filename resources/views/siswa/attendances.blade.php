@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="space-y-6" x-data="attendanceApp({
-    lkpLat: {{ (float) ($lkpConfig['latitude'] ?? -5.1240) }},
-    lkpLng: {{ (float) ($lkpConfig['longitude'] ?? 105.3370) }},
+    lkpLat: {{ (float) ($lkpConfig['latitude'] ?? -5.124188) }},
+    lkpLng: {{ (float) ($lkpConfig['longitude'] ?? 105.332312) }},
     maxRadius: {{ (int) ($lkpConfig['radius_meters'] ?? 150) }},
-    strictRadius: {{ config('attendance.strict_radius', true) ? 'true' : 'false' }},
+    strictRadius: {{ ($lkpConfig['strict_radius'] ?? true) ? 'true' : 'false' }},
     lkpName: '{{ addslashes($lkpConfig['lkp_name'] ?? 'LKP Langgas Sinau') }}',
-    lkpAddress: '{{ addslashes($lkpConfig['address'] ?? 'Gg. Cendana, Banjar Rejo, Kec. Batanghari, Kabupaten Lampung Timur, Lampung 34181') }}'
+    lkpAddress: '{{ addslashes($lkpConfig['address'] ?? 'Banjar Rejo, Kec. Batanghari, Kabupaten Lampung Timur, Lampung') }}'
 })">
     
     <!-- Header Halaman & Jam Real-Time WIB -->
@@ -42,7 +42,7 @@
         <div class="p-4 rounded-2xl bg-white border border-emerald-200/90 shadow-2xs flex items-center gap-3.5 relative overflow-hidden">
             <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500"></div>
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-white font-black text-xs shrink-0 shadow-xs">
-                08:00
+                {{ $lkpConfig['in_start'] ?? '08:00' }}
             </span>
             <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between gap-1">
@@ -50,7 +50,7 @@
                         Jam Masuk Tepat
                     </span>
                 </div>
-                <p class="text-xs font-black text-slate-900 mt-1">08.00 - 09.30 WIB</p>
+                <p class="text-xs font-black text-slate-900 mt-1">{{ str_replace(':', '.', $lkpConfig['in_start'] ?? '08:00') }} - {{ str_replace(':', '.', $lkpConfig['in_on_time_end'] ?? '09:30') }} WIB</p>
                 <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Dicatat Hadir Tepat Waktu</p>
             </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="p-4 rounded-2xl bg-white border border-amber-200/90 shadow-2xs flex items-center gap-3.5 relative overflow-hidden">
             <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500 text-white font-black text-xs shrink-0 shadow-xs">
-                09:31
+                {{ $lkpConfig['in_on_time_end'] ?? '09:30' }}
             </span>
             <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between gap-1">
@@ -67,7 +67,7 @@
                         Jam Masuk Terlambat
                     </span>
                 </div>
-                <p class="text-xs font-black text-slate-900 mt-1">09.31 - 13.50 WIB</p>
+                <p class="text-xs font-black text-slate-900 mt-1">09.31 - {{ str_replace(':', '.', $lkpConfig['in_late_end'] ?? '13:50') }} WIB</p>
                 <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Dicatat Hadir Terlambat</p>
             </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="p-4 rounded-2xl bg-white border border-blue-200/90 shadow-2xs flex items-center gap-3.5 relative overflow-hidden">
             <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600"></div>
             <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white font-black text-xs shrink-0 shadow-xs">
-                14:00
+                {{ $lkpConfig['out_start'] ?? '14:00' }}
             </span>
             <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between gap-1">
@@ -84,7 +84,7 @@
                         Jam Pulang Resmi
                     </span>
                 </div>
-                <p class="text-xs font-black text-slate-900 mt-1">14.00 - 17.00 WIB</p>
+                <p class="text-xs font-black text-slate-900 mt-1">{{ str_replace(':', '.', $lkpConfig['out_start'] ?? '14:00') }} - {{ str_replace(':', '.', $lkpConfig['out_end'] ?? '17:00') }} WIB</p>
                 <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Presensi Kepulangan Siswa</p>
             </div>
         </div>

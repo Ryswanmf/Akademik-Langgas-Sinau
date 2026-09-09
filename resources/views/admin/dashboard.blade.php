@@ -24,6 +24,46 @@
         <div class="absolute -right-10 -bottom-10 h-64 w-64 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
     </div>
 
+    <!-- Quick GPS & Jam Presensi Widget -->
+    @if(isset($primaryLocation) && $primaryLocation)
+    <div class="rounded-3xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 via-white to-slate-50 p-5 shadow-2xs">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex items-start sm:items-center gap-3.5">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h3 class="text-sm font-extrabold text-slate-900">{{ $primaryLocation->name }}</h3>
+                        <span class="rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5">Titik GPS Aktif</span>
+                        @if($primaryLocation->plus_code)
+                            <span class="rounded-md bg-indigo-100 text-indigo-700 font-mono text-[10px] font-bold px-2 py-0.5">📍 {{ $primaryLocation->plus_code }}</span>
+                        @endif
+                    </div>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Radius Geofence: <strong>{{ $primaryLocation->radius_meters }} Meter</strong> ({{ $primaryLocation->strict_radius ? 'Kunci Ketat' : 'Toleransi' }}) &bull; 
+                        Masuk: <strong>{{ $primaryLocation->in_start }} - {{ $primaryLocation->in_on_time_end }} WIB</strong> (Terlambat s/d {{ $primaryLocation->in_late_end }}) &bull; 
+                        Pulang: <strong>{{ $primaryLocation->out_start }} - {{ $primaryLocation->out_end }} WIB</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+                <a href="{{ route('admin.attendance-locations.index') }}" 
+                   class="inline-flex items-center gap-1.5 rounded-xl bg-white border border-slate-200 px-3.5 py-2 text-xs font-bold text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-indigo-600 transition-colors">
+                    <svg class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+                    </svg>
+                    Pilih & Kelola Titik Peta
+                </a>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!-- 6 KPI Stat Cards -->
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         <!-- Total Siswa -->

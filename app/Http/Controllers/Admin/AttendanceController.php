@@ -88,8 +88,19 @@ class AttendanceController extends Controller
         }
 
         $allStudents = Student::with('user')->orderBy('student_number')->get();
+        $locations = \App\Models\AttendanceLocation::where('is_active', true)->get();
+        $primaryLocation = \App\Models\AttendanceLocation::getPrimary();
 
-        return view('admin.attendances.create', compact('classes', 'schedules', 'selectedClassId', 'selectedScheduleId', 'studentsInClass', 'allStudents'));
+        return view('admin.attendances.create', compact(
+            'classes', 
+            'schedules', 
+            'selectedClassId', 
+            'selectedScheduleId', 
+            'studentsInClass', 
+            'allStudents',
+            'locations',
+            'primaryLocation'
+        ));
     }
 
     public function store(Request $request)
@@ -130,17 +141,44 @@ class AttendanceController extends Controller
             'check_out_time' => ['nullable'],
             'status' => ['required', 'in:hadir,terlambat,izin,sakit,alpa'],
             'note' => ['nullable', 'string'],
+            'check_in_lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'check_in_lng' => ['nullable', 'numeric', 'between:-180,180'],
+            'attendance_location_id' => ['nullable', 'exists:attendance_locations,id'],
         ]);
+
+        $distance = null;
+        $locationId = $validated['attendance_location_id'] ?? null;
+        if (!empty($validated['check_in_lat']) && !empty($validated['check_in_lng'])) {
+            $userLat = (float) $validated['check_in_lat'];
+            $userLng = (float) $validated['check_in_lng'];
+
+            if (!empty($locationId)) {
+                $selectedLoc = \App\Models\AttendanceLocation::find($locationId);
+                if ($selectedLoc) {
+                    $distance = $selectedLoc->distanceFrom($userLat, $userLng);
+                }
+            } else {
+                $nearest = \App\Models\AttendanceLocation::findNearestActive($userLat, $userLng);
+                if ($nearest) {
+                    $distance = $nearest['distance'];
+                    $locationId = $nearest['location']->id;
+                }
+            }
+        }
 
         Attendance::updateOrCreate(
             [
                 'student_id' => $validated['student_id'],
-                'schedule_id' => $validated['schedule_id'] ?: null,
+                'schedule_id' => $validated['schedule_id'] ?? null,
                 'date' => $validated['date'],
             ],
             [
+                'attendance_location_id' => $locationId,
                 'check_in_time' => $validated['check_in_time'] ?? null,
                 'check_out_time' => $validated['check_out_time'] ?? null,
+                'check_in_lat' => $validated['check_in_lat'] ?? null,
+                'check_in_lng' => $validated['check_in_lng'] ?? null,
+                'check_in_distance' => $distance,
                 'status' => $validated['status'],
                 'note' => $validated['note'] ?? null,
             ]
@@ -151,8 +189,10 @@ class AttendanceController extends Controller
 
     public function edit(Attendance $attendance)
     {
-        $attendance->load(['student.user', 'schedule.class']);
-        return view('admin.attendances.edit', compact('attendance'));
+        $attendance->load(['student.user', 'schedule.class', 'attendanceLocation']);
+        $locations = \App\Models\AttendanceLocation::where('is_active', true)->get();
+        $primaryLocation = \App\Models\AttendanceLocation::getPrimary();
+        return view('admin.attendances.edit', compact('attendance', 'locations', 'primaryLocation'));
     }
 
     public function update(Request $request, Attendance $attendance)
@@ -162,7 +202,33 @@ class AttendanceController extends Controller
             'check_out_time' => ['nullable'],
             'status' => ['required', 'in:hadir,terlambat,izin,sakit,alpa'],
             'note' => ['nullable', 'string'],
+            'check_in_lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'check_in_lng' => ['nullable', 'numeric', 'between:-180,180'],
+            'attendance_location_id' => ['nullable', 'exists:attendance_locations,id'],
         ]);
+
+        if (!empty($validated['check_in_lat']) && !empty($validated['check_in_lng'])) {
+            $userLat = (float) $validated['check_in_lat'];
+            $userLng = (float) $validated['check_in_lng'];
+
+            if (!empty($validated['attendance_location_id'])) {
+                $selectedLoc = \App\Models\AttendanceLocation::find($validated['attendance_location_id']);
+                if ($selectedLoc) {
+                    $validated['check_in_distance'] = $selectedLoc->distanceFrom($userLat, $userLng);
+                }
+            } else {
+                $nearest = \App\Models\AttendanceLocation::findNearestActive($userLat, $userLng);
+                if ($nearest) {
+                    $validated['check_in_distance'] = $nearest['distance'];
+                    $validated['attendance_location_id'] = $nearest['location']->id;
+                }
+            }
+        } else {
+            $validated['check_in_lat'] = null;
+            $validated['check_in_lng'] = null;
+            $validated['check_in_distance'] = null;
+            $validated['attendance_location_id'] = null;
+        }
 
         $attendance->update($validated);
 

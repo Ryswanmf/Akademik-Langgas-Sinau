@@ -39,6 +39,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/attendances/print/{student}', [AdminController\AttendanceController::class, 'printStudentAttendance'])->name('attendances.print-student');
     Route::resource('attendances', AdminController\AttendanceController::class)->except(['show']);
 
+    // Titik GPS & Pengaturan Waktu Absensi
+    Route::patch('/attendance-locations/{attendanceLocation}/toggle-active', [AdminController\AttendanceLocationController::class, 'toggleActive'])->name('attendance-locations.toggle-active');
+    Route::resource('attendance-locations', AdminController\AttendanceLocationController::class)->except(['show']);
+
     // Perizinan
     Route::get('/permissions', [AdminController\PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/permissions/{permission}', [AdminController\PermissionController::class, 'show'])->name('permissions.show');

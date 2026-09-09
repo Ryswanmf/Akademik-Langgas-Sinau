@@ -9,6 +9,7 @@ class Attendance extends Model
     protected $fillable = [
         'student_id',
         'schedule_id',
+        'attendance_location_id',
         'date',
         'check_in_time',
         'check_out_time',
@@ -45,6 +46,11 @@ class Attendance extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function attendanceLocation()
+    {
+        return $this->belongsTo(AttendanceLocation::class);
     }
 
     /**
@@ -149,7 +155,7 @@ class Attendance extends Model
             return true;
         }
 
-        $maxRadius = config('attendance.radius_meters', 150);
+        $maxRadius = $this->attendanceLocation?->radius_meters ?? config('attendance.radius_meters', 150);
         return $this->check_in_distance <= $maxRadius;
     }
 }

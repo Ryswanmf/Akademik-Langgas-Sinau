@@ -21,6 +21,7 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 <body class="h-full text-slate-800 antialiased selection:bg-indigo-600 selection:text-white" x-data="{ sidebarOpen: false }">
     <div class="flex h-screen overflow-hidden bg-slate-50">
@@ -39,5 +40,6 @@
             </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>
