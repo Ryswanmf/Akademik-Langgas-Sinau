@@ -46,7 +46,7 @@
                 <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                 @if ($announcement->image)
                     <div class="mt-2">
-                        <img src="{{ Storage::url($announcement->image) }}" class="h-20 rounded-xl object-cover ring-1 ring-slate-200" alt="">
+                        <img src="{{ $announcement->image_url ?? Storage::url($announcement->image) }}" class="h-20 rounded-xl object-cover ring-1 ring-slate-200" alt="">
                     </div>
                 @endif
             </div>

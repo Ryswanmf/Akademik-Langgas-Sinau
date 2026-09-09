@@ -47,7 +47,7 @@
             <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="flex items-start gap-4">
                     @if ($item->image)
-                        <img src="{{ Storage::url($item->image) }}" class="h-16 w-16 rounded-2xl object-cover ring-1 ring-slate-100 shrink-0" alt="">
+                        <img src="{{ $item->image_url ?? Storage::url($item->image) }}" class="h-16 w-16 rounded-2xl object-cover ring-1 ring-slate-100 shrink-0" alt="">
                     @else
                         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shrink-0">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">

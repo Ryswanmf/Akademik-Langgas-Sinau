@@ -12,7 +12,7 @@
         @forelse ($announcements as $ann)
             <div class="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
                 @if ($ann->image)
-                    <img src="{{ Storage::url($ann->image) }}" class="h-44 w-full md:w-56 rounded-2xl object-cover ring-1 ring-slate-100 shrink-0" alt="{{ $ann->title }}">
+                    <img src="{{ $ann->image_url ?? Storage::url($ann->image) }}" class="h-44 w-full md:w-56 rounded-2xl object-cover ring-1 ring-slate-100 shrink-0" alt="{{ $ann->title }}">
                 @endif
                 <div class="space-y-2 flex-1 flex flex-col justify-between">
                     <div>

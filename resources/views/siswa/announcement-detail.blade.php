@@ -13,7 +13,7 @@
 
     <div class="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-10 shadow-xs space-y-6">
         @if ($announcement->image)
-            <img src="{{ Storage::url($announcement->image) }}" class="w-full max-h-96 rounded-2xl object-cover ring-1 ring-slate-100" alt="{{ $announcement->title }}">
+            <img src="{{ $announcement->image_url ?? Storage::url($announcement->image) }}" class="w-full max-h-96 rounded-2xl object-cover ring-1 ring-slate-100" alt="{{ $announcement->title }}">
         @endif
 
         <div>

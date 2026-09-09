@@ -95,3 +95,42 @@ Route::middleware(['auth', 'siswa'])->prefix('siswa')->name('siswa.')->group(fun
     Route::get('/announcements', [SiswaController\AnnouncementController::class, 'index'])->name('announcements');
     Route::get('/announcements/{announcement}', [SiswaController\AnnouncementController::class, 'show'])->name('announcements.show');
 });
+
+// ==============================================================================
+// FALLBACK MEDIA STREAMING (PENTING UNTUK cPANEL / SHARED HOSTING)
+// Memastikan gambar/berkas storage & uploads tetap tampil meskipun symlink cPanel belum dibuat / dinonaktifkan hosting
+// ==============================================================================
+Route::get('/storage/{path}', function (string $path) {
+    $filePath = storage_path('app/public/' . $path);
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+
+    $mimeType = @mime_content_type($filePath) ?: 'application/octet-stream';
+    return response()->file($filePath, [
+        'Content-Type' => $mimeType,
+        'Cache-Control' => 'public, max-age=86400',
+    ]);
+})->where('path', '.*')->name('storage.fallback');
+
+Route::get('/uploads/{path}', function (string $path) {
+    $candidates = [
+        public_path('uploads/' . $path),
+        base_path('public/uploads/' . $path),
+        base_path('../public_html/uploads/' . $path),
+        storage_path('app/public/uploads/' . $path),
+    ];
+
+    foreach ($candidates as $filePath) {
+        if (file_exists($filePath) && !is_dir($filePath)) {
+            $mimeType = @mime_content_type($filePath) ?: 'application/octet-stream';
+            return response()->file($filePath, [
+                'Content-Type' => $mimeType,
+                'Cache-Control' => 'public, max-age=86400',
+            ]);
+        }
+    }
+
+    abort(404);
+})->where('path', '.*')->name('uploads.fallback');
+

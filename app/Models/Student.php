@@ -60,8 +60,13 @@ class Student extends Model
 
     public function getPhotoUrlAttribute(): string
     {
-        if ($this->photo && Storage::disk('public')->exists($this->photo)) {
-            return Storage::disk('public')->url($this->photo);
+        if ($this->photo) {
+            if (str_starts_with($this->photo, 'http')) {
+                return $this->photo;
+            }
+            if (Storage::disk('public')->exists($this->photo) || file_exists(storage_path('app/public/' . $this->photo))) {
+                return asset('storage/' . ltrim($this->photo, '/'));
+            }
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->user ? $this->user->name : 'Siswa') . '&background=0D8ABC&color=fff&size=200';
     }
